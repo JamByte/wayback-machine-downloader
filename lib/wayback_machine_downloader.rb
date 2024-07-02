@@ -215,7 +215,7 @@ class WaybackMachineDownloader
         until file_queue.empty?
           file_remote_info = file_queue.pop(true) rescue nil
           # delay start of download operation for configurable amount of time
-          sleep(@delay)
+          
           download_file(file_remote_info) if file_remote_info
         end
       end
@@ -275,6 +275,7 @@ class WaybackMachineDownloader
         structure_dir_path dir_path
         open(file_path, "wb") do |file|
           begin
+            sleep(@delay)
             URI("https://web.archive.org/web/#{file_timestamp}id_/#{file_url}").open("Accept-Encoding" => "plain") do |uri|
               file.write(uri.read)
             end
